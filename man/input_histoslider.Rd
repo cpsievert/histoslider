@@ -4,8 +4,44 @@
 \alias{input_histoslider}
 \title{Create a histoslider}
 \usage{
-input_histoslider(inputId, default = "")
+input_histoslider(
+  id,
+  values,
+  start = NULL,
+  end = NULL,
+  width = "100\%",
+  height = 150,
+  breaks = "Sturges",
+  options = list()
+)
+}
+\arguments{
+\item{id}{An input id.}
+
+\item{values}{a vector of values for which the histogram is desired.}
+
+\item{start}{A value for the starting handle.}
+
+\item{end}{A value for the ending handle.}
+
+\item{width, height}{Any valid CSS unit defining the width/height.}
+
+\item{breaks}{value passed along to \code{\link[=hist]{hist()}}.}
+
+\item{options}{a list of \href{https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L103-L125}{histoslider options}.}
 }
 \description{
 Create a histoslider
+}
+\examples{
+
+library(shiny)
+
+shinyApp(
+  input_histoslider("x", rnorm(100)),
+  function(input, output) {
+    observe(print(input$x))
+  }
+)
+
 }

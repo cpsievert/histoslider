@@ -1,8 +1,8 @@
 Package: histoslider
 Title: A Shiny input histogram slider 
 Version: 0.0.0.9000
-Authors@R: 
-    person("Carson", "Sievert", role = "aut", email = "carson@rstudio.com", comment = c(ORCID = "0000-0002-4958-2844"))
+Authors@R:
+    person("Carson", "Sievert", role = c("cre", "aut"), email = "carson@rstudio.com", comment = c(ORCID = "0000-0002-4958-2844"))
 Description: A Shiny input histogram slider
 License: MIT + file LICENSE
 Encoding: UTF-8

@@ -2,6 +2,3 @@
 
 export(input_histoslider)
 export(update_histoslider)
-importFrom(htmltools,htmlDependency)
-importFrom(htmltools,tags)
-importFrom(reactR,createReactShinyInput)
