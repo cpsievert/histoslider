@@ -75,12 +75,18 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
   }
 };
 
-reactShinyInput(
-  '.histoslider', 'histoslider.histoslider', HistosliderInput,
-  {"ratePolicy": {"policy": "debounce", "delay": 250}}
-);
+// https://github.com/react-R/reactR/blob/7dccb68a/srcjs/input.js#L36-L71
+const inputOptions = {
+  type: "histoslider.histoslider",
+  ratePolicy: {
+    policy: "debounce", 
+    delay: 250
+  }
+}
 
+reactShinyInput('.histoslider', 'histoslider.histoslider', HistosliderInput, inputOptions);
 
+// TODO: should we try adding width:100%/height:100% to the uiOutput() container?
 //const old_initialize = Shiny.inputBindings["histoslider.histoslider"].initialize;
 //Shiny.inputBindings["histoslider.histoslider"].initialize = function(el) {
 //  // TODO: probably have to do this recursively :(
