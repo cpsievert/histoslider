@@ -6,6 +6,7 @@
 \usage{
 input_histoslider(
   id,
+  label,
   values,
   start = NULL,
   end = NULL,
@@ -18,15 +19,17 @@ input_histoslider(
 \arguments{
 \item{id}{An input id.}
 
-\item{values}{a vector of values for which the histogram is desired.}
+\item{label}{A label for the input (can be \code{NULL} or a string).}
 
-\item{start}{A value for the starting handle.}
+\item{values}{a vector of numeric values for which the histogram is desired.}
 
-\item{end}{A value for the ending handle.}
+\item{start}{A numeric value for the starting handle.}
+
+\item{end}{A numeric value for the ending handle.}
 
 \item{width, height}{Any valid CSS unit defining the width/height.}
 
-\item{breaks}{value passed along to \code{\link[=hist]{hist()}}.}
+\item{breaks}{determines how histogram bins are computed (see \code{\link[=hist]{hist()}} for possible values and details).}
 
 \item{options}{a list of \href{https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L103-L125}{histoslider options}.}
 }
@@ -38,7 +41,7 @@ Create a histoslider
 library(shiny)
 
 shinyApp(
-  input_histoslider("x", rnorm(100)),
+  input_histoslider("x", "Random", rnorm(100)),
   function(input, output) {
     observe(print(input$x))
   }

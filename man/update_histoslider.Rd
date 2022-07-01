@@ -6,8 +6,14 @@
 \usage{
 update_histoslider(
   id,
-  value,
-  configuration = NULL,
+  label = NULL,
+  values = NULL,
+  start = NULL,
+  end = NULL,
+  width = NULL,
+  height = NULL,
+  breaks = "Sturges",
+  options = NULL,
   session = shiny::getDefaultReactiveDomain()
 )
 }

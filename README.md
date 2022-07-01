@@ -18,12 +18,15 @@ remotes::install_github("cpsievert/histoslider")
 
 ``` r
 library(shiny)
+library(histoslider)
 
 shinyApp(
-  histoslider::input_histoslider("x", rnorm(100)),
+  input_histoslider("x", "Random", rnorm(100)),
   function(input, output) {
     observe(print(input$x))
   }
 )
 ```
 
+
+See the `inst/examples` folder for more examples.

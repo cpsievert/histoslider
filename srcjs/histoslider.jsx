@@ -4,8 +4,12 @@ import { Histoslider } from 'histoslider';
 
 const HistosliderInput = ({ configuration, value, setValue }) => {
 
-  // Use state/effect in order to pass the computed height/width of the HistosliderInput
-  // down to Histoslider (which must take a fixed height/width).
+  /*
+  * All of this useRef/useEffect/useState business is just to support responsive
+  * (by passing the computed size of the container div to the Histoslider
+  * component). Ideally Histoslider would support responsive by itself, but it
+  * doesn't.
+  */
   const ref = React.useRef(null);
   const [dimensions, setDimensions] = React.useState(null);
 
@@ -28,13 +32,26 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
   // Use height/width as a style on the parent div (and pass our own computed height/width via state)
   const style = {width: configuration.width, height: configuration.height};
 
+  // When an update occurs, the config's width/height might be missing, so
+  // fallback to the ref's width/height. 
+  if (!style.width && ref.current) {
+    style.width = ref.current.style.width;
+  }
+  if (!style.height && ref.current) {
+    style.height = ref.current.style.height;
+  }
+
   // Wait to render Histoslider until the parent's dimensions are known.
   if (!dimensions) {
     return <div ref={ref} style={style}></div>;
   } else {
-    // This should use splcing, but I couldn't get it to work, so I'm just listing all the props for now
+    // Ideally we'd use splicing to pass the rest of the configuration, but I
+    // couldn't get it to work, so I'm just listing all the props for now
     // https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L102-L126
     return <div ref={ref} style={style}>
+      <div style={{display: 'flex', justifyContent: 'center', marginBottom: '-10px'}}>
+        {configuration.label ? <label>{configuration.label}</label> : null}
+      </div>
       <Histoslider 
         data={configuration.data}
         onChange={x => setValue(x, true)}
@@ -44,8 +61,8 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
         height={dimensions.height}
         selection={value}
         barStyle={configuration.barStyle}
-        barBorderRadius={configuration.barBorderRadius}
-        barPadding={configuration.barPadding}
+        barBorderRadius={configuration.barBorderRadius || 0}
+        barPadding={configuration.barPadding || 1}
         histogramStyle={configuration.histogramStyle}
         sliderStyle={configuration.sliderStyle}
         showOnDrag={configuration.showOnDrag}
@@ -62,3 +79,15 @@ reactShinyInput(
   '.histoslider', 'histoslider.histoslider', HistosliderInput,
   {"ratePolicy": {"policy": "debounce", "delay": 250}}
 );
+
+
+//const old_initialize = Shiny.inputBindings["histoslider.histoslider"].initialize;
+//Shiny.inputBindings["histoslider.histoslider"].initialize = function(el) {
+//  // TODO: probably have to do this recursively :(
+//  console.log(el.parentNode);
+//  const is_dynamic = el.parentNode.classList.contains('shiny-html-output');
+//  if (is_dynamic) {
+//    el.style.width = '100%';
+//    el.style.height = '100%';
+//  }
+//}
