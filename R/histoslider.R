@@ -42,6 +42,11 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
     options
   )
 
+  # TODO: is there a way to do this properly without force=T?
+  shiny::registerInputHandler("histoslider.histoslider", function(x, shinysession, name) {
+    sort(as.numeric(x))
+  }, force = TRUE)
+
   reactR::createReactShinyInput(
     id, class = "histoslider",
     dependencies = htmltools::htmlDependency(
@@ -54,7 +59,7 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
     default = selection,
     configuration = config,
     container = function(...) {
-      div(..., style = css(height="100%", width="100%"))
+      div(..., style = css(height = "100%", width = "100%"))
     }
   )
 }
