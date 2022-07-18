@@ -2,7 +2,7 @@
   "private": true,
   "dependencies": {
     "d3-time-format": "^4.1.0",
-    "histoslider": "^2.0.16"
+    "histoslider": "github:samhogg/histoslider#7c44224219f017dc3add0f40f432799a3a3c1d66"
   },
   "devDependencies": {
     "@babel/core": "^7.2.0",

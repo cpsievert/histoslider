@@ -2412,10 +2412,9 @@ hash.js@^1.0.0, hash.js@^1.0.3:
     inherits "^2.0.3"
     minimalistic-assert "^1.0.1"
 
-histoslider@^2.0.16:
+"histoslider@github:samhogg/histoslider#7c44224219f017dc3add0f40f432799a3a3c1d66":
   version "2.0.16"
-  resolved "https://registry.yarnpkg.com/histoslider/-/histoslider-2.0.16.tgz#44a17e89d7649e4242dbc628583e69d0054cbe12"
-  integrity sha512-ab++pZdaDse+Dfa8FW38r3JWsW2tiI8TfMeyu7bhf9VXXkvkfY6Da1ohoOQaTMovgdgXOuhU6oezwyRqGhZkSQ==
+  resolved "https://codeload.github.com/samhogg/histoslider/tar.gz/7c44224219f017dc3add0f40f432799a3a3c1d66"
   dependencies:
     prop-types "^15.5.10"
     react-motion "^0.5.0"

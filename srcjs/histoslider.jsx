@@ -51,7 +51,6 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
     // but I don't think reactR currently supports that.
     // TODO: this requires the following patch to histoslider:
     // https://github.com/samhogg/histoslider/pull/110
-    // (I've made the patch locally to my node_modules, but it's not yet pushed to the repo.)
     const formatLabelFunction = configuration.isDate ?
       timeFormat(configuration.handleLabelFormat):
       configuration.formatLabelFunction;
