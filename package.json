@@ -1,6 +1,7 @@
 {
   "private": true,
   "dependencies": {
+    "d3-time-format": "^4.1.0",
     "histoslider": "^2.0.16"
   },
   "devDependencies": {

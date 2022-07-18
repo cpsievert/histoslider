@@ -37,7 +37,8 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
       selection = selection,
       width = validateCssUnit(width),
       height = validateCssUnit(height),
-      label = label
+      label = label,
+      isDate = is_date_time(values)
     ),
     options
   )
@@ -94,7 +95,8 @@ update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, en
     selection = selection,
     width = validateCssUnit(width),
     height = validateCssUnit(height),
-    label = label
+    label = label,
+    isDate = is_date_time(values)
   ))
 
   if (length(options)) {
@@ -115,11 +117,13 @@ update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, en
 
 
 compute_bins <- function(values, breaks) {
-  if (!is.numeric(values)) {
-    stop("`values` must be a numeric vector")
+  x <- hist(values, plot = FALSE, breaks = breaks)
+
+  if (is_date_time(values)) {
+    C <- if (inherits(values, "Date")) 86400000 else 1000
+    x$breaks <- x$breaks * C
   }
 
-  x <- hist(values, plot = FALSE, breaks = breaks)
   res <- lapply(seq_along(x$counts), function(i) {
     list(
       y = x$counts[[i]],
@@ -130,6 +134,10 @@ compute_bins <- function(values, breaks) {
 
   attr(res, "range") <- range(x$breaks)
   res
+}
+
+is_date_time <- function(x) {
+  inherits(x, c("Date", "POSIXt"))
 }
 
 
