@@ -42,6 +42,17 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
     style.height = ref.current.style.height;
   }
 
+  // i.e., the full selection range
+  const range = [
+     configuration.data[0].x0, 
+     configuration.data[configuration.data.length - 1].x
+  ];
+
+  const isFullRange = range[0] >= value[0] && range[1] <= value[1];
+
+  // Use state to track the current value so we can 'reset' the selection when "reset" is clicked.
+  const [val, setValueState] = React.useState(value);
+
   // Wait to render Histoslider until the parent's dimensions are known.
   if (!dimensions) {
     return <div ref={ref} style={style}></div>;
@@ -55,21 +66,23 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
       timeFormat(configuration.handleLabelFormat):
       configuration.formatLabelFunction;
 
+
     // Ideally we'd use splicing to pass the rest of the configuration, but I
     // couldn't get it to work, so I'm just listing all the props for now
     // https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L102-L126
     return <div ref={ref} style={style}>
-      <div style={{display: 'flex', justifyContent: 'center', marginBottom: '-10px'}}>
-        {configuration.label ? <label>{configuration.label}</label> : null}
+      <div className='histoslider-title'>
+        <label className='histoslider-label'>{configuration.label}</label>
+        <a className='histoslider-reset link-primary' role='button' onClick={x => { setValueState(range); setValue(range, true) }} style={{visibility: isFullRange ? 'hidden' : 'visible'}}>Reset</a>
       </div>
       <Histoslider 
         data={configuration.data}
-        onChange={x => setValue(x, true)}
+        onChange={x => { setValueState(x); setValue(x, true) }}
         selectedColor={configuration.selectedColor}
         unselectedColor={configuration.unselectedColor}
         width={dimensions.width}
         height={dimensions.height}
-        selection={value}
+        selection={val}
         barStyle={configuration.barStyle}
         barBorderRadius={configuration.barBorderRadius || 0}
         barPadding={configuration.barPadding || 1}

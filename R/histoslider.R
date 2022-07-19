@@ -55,7 +55,8 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
       version = "1.0.0",
       src = "www/histoslider/histoslider",
       package = "histoslider",
-      script = "histoslider.js"
+      script = "histoslider.js",
+      stylesheet = "histoslider.css"
     ),
     default = selection,
     configuration = config,
