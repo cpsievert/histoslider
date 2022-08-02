@@ -5,6 +5,11 @@ import { timeFormat } from 'd3-time-format';
 
 const HistosliderInput = ({ configuration, value, setValue }) => {
 
+  const [lastConfig, setLastConfig] = React.useState({});
+  React.useEffect(() => setLastConfig(configuration), [configuration]);
+
+  configuration = {...lastConfig, ...configuration};
+
   /*
   * All of this useRef/useEffect/useState business is just to support responsive
   * (by passing the computed size of the container div to the Histoslider
@@ -52,6 +57,8 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
 
   // Use state to track the current value so we can 'reset' the selection when "reset" is clicked.
   const [val, setValueState] = React.useState(value);
+  React.useEffect(() => setValueState(value), [value]);
+
 
   // Wait to render Histoslider until the parent's dimensions are known.
   if (!dimensions) {
@@ -65,7 +72,6 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
     const formatLabelFunction = configuration.isDate ?
       timeFormat(configuration.handleLabelFormat):
       configuration.formatLabelFunction;
-
 
     // Ideally we'd use splicing to pass the rest of the configuration, but I
     // couldn't get it to work, so I'm just listing all the props for now

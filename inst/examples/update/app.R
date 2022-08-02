@@ -3,6 +3,7 @@ library(htmltools)
 library(histoslider)
 
 ui <- fluidPage(
+  actionButton("click", "Click"),
   div(
     style = css(
       width = "50%",
@@ -20,7 +21,7 @@ ui <- fluidPage(
 shinyApp(
   ui,
   function(input, output) {
-    observe({
+    observeEvent(input$click, {
       vals <- mtcars[[input$var]]
       update_histoslider("slide", values = vals)
     })
