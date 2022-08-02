@@ -12,14 +12,15 @@
 #' @export
 #' @examples
 #'
-#' library(shiny)
-#'
-#' shinyApp(
-#'   input_histoslider("x", "Random", rnorm(100)),
-#'   function(input, output) {
-#'     observe(print(input$x))
-#'   }
-#' )
+#' if (interactive()) {
+#'   library(shiny)
+#'   shinyApp(
+#'     input_histoslider("x", "Random", rnorm(100)),
+#'     function(input, output) {
+#'       observe(print(input$x))
+#'     }
+#'   )
+#' }
 #'
 input_histoslider <- function(id, label, values, start = NULL, end = NULL, width = "100%", height = 150, breaks = "Sturges", options = list()) {
 
@@ -66,8 +67,8 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
   )
 }
 
-#' Update a histoslider
-#'
+#' @rdname input_histoslider
+#' @param session The shiny user `session` object.
 #' @export
 update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, end = NULL, width = NULL, height = NULL, breaks = "Sturges",  options = NULL, session = shiny::getDefaultReactiveDomain()) {
 
@@ -118,7 +119,7 @@ update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, en
 
 
 compute_bins <- function(values, breaks) {
-  x <- hist(values, plot = FALSE, breaks = breaks)
+  x <- graphics::hist(values, plot = FALSE, breaks = breaks)
 
   if (is_date_time(values)) {
     C <- if (inherits(values, "Date")) 86400000 else 1000

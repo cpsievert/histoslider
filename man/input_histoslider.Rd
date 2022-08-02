@@ -2,6 +2,7 @@
 % Please edit documentation in R/histoslider.R
 \name{input_histoslider}
 \alias{input_histoslider}
+\alias{update_histoslider}
 \title{Create a histoslider}
 \usage{
 input_histoslider(
@@ -14,6 +15,19 @@ input_histoslider(
   height = 150,
   breaks = "Sturges",
   options = list()
+)
+
+update_histoslider(
+  id,
+  label = NULL,
+  values = NULL,
+  start = NULL,
+  end = NULL,
+  width = NULL,
+  height = NULL,
+  breaks = "Sturges",
+  options = NULL,
+  session = shiny::getDefaultReactiveDomain()
 )
 }
 \arguments{
@@ -32,19 +46,22 @@ input_histoslider(
 \item{breaks}{determines how histogram bins are computed (see \code{\link[=hist]{hist()}} for possible values and details).}
 
 \item{options}{a list of \href{https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L103-L125}{histoslider options}.}
+
+\item{session}{The shiny user \code{session} object.}
 }
 \description{
 Create a histoslider
 }
 \examples{
 
-library(shiny)
-
-shinyApp(
-  input_histoslider("x", "Random", rnorm(100)),
-  function(input, output) {
-    observe(print(input$x))
-  }
-)
+if (interactive()) {
+  library(shiny)
+  shinyApp(
+    input_histoslider("x", "Random", rnorm(100)),
+    function(input, output) {
+      observe(print(input$x))
+    }
+  )
+}
 
 }
