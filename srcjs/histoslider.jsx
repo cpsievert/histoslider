@@ -68,7 +68,7 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
 
   const Title = <div className='histoslider-title'>
     <label className='histoslider-label'>{configuration.label}</label>
-    <a className='histoslider-reset link-primary' role='button' onClick={x => { setValueState(range); setValue(range, true) }} style={{display: isFiltered ? null : 'none'}}>Reset</a>
+    <a className='histoslider-reset link-primary' role='button' onClick={x => { setValueState(range); setValue(range, true) }} style={{visibility: isFiltered ? 'visible' : 'hidden'}}>Reset</a>
   </div>
 
   // Wait to render Histoslider until the parent's dimensions are known.

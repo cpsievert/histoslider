@@ -22,7 +22,7 @@
 #'   )
 #' }
 #'
-input_histoslider <- function(id, label, values, start = NULL, end = NULL, width = "100%", height = 150, breaks = "Sturges", options = list()) {
+input_histoslider <- function(id, label, values, start = NULL, end = NULL, width = "100%", height = 175, breaks = "Sturges", options = list()) {
 
   bins <- compute_bins(values, breaks)
 
