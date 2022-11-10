@@ -11,7 +11,7 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
   configuration = {...lastConfig, ...configuration};
 
   /*
-  * All of this useRef/useEffect/useState business is just to support responsive
+  * All of this setDimensions business is just to support responsive
   * (by passing the computed size of the container div to the Histoslider
   * component). Ideally Histoslider would support responsive by itself, but it
   * doesn't.
@@ -25,7 +25,9 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
     const resize_observer = new ResizeObserver((entries) => {
       if (!ref.current) return;
       const { offsetHeight, offsetWidth } = ref.current;
-      setDimensions({ width: offsetWidth, height: offsetHeight });
+      const title = ref.current.querySelector('.histoslider-title');
+      const titleHeight = title ? title.offsetHeight : 0;
+      setDimensions({ height: offsetHeight - titleHeight, width: offsetWidth });
     });
 
     if (ref.current) resize_observer.observe(ref.current);
@@ -53,16 +55,25 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
      configuration.data[configuration.data.length - 1].x
   ];
 
-  const isFullRange = range[0] >= value[0] && range[1] <= value[1];
+  // sometimes `value` can be `null` (double-click quickly on a histogram bar), so be careful
+  // when determining whether a filter is applied.
+  let isFiltered = false;
+  if (range && value) {
+    isFiltered = range[0] < value[0] || value[1] < range[1];
+  }
 
   // Use state to track the current value so we can 'reset' the selection when "reset" is clicked.
   const [val, setValueState] = React.useState(value);
   React.useEffect(() => setValueState(value), [value]);
 
+  const Title = <div className='histoslider-title'>
+    <label className='histoslider-label'>{configuration.label}</label>
+    <a className='histoslider-reset link-primary' role='button' onClick={x => { setValueState(range); setValue(range, true) }} style={{display: isFiltered ? null : 'none'}}>Reset</a>
+  </div>
 
   // Wait to render Histoslider until the parent's dimensions are known.
   if (!dimensions) {
-    return <div ref={ref} style={style}></div>;
+    return <div ref={ref} style={style}>{Title}</div>;
   } else {
 
     // Ideally the user would be able to pass in a custom formatting function (via formatLabelFunction),
@@ -77,10 +88,7 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
     // couldn't get it to work, so I'm just listing all the props for now
     // https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L102-L126
     return <div ref={ref} style={style}>
-      <div className='histoslider-title'>
-        <label className='histoslider-label'>{configuration.label}</label>
-        <a className='histoslider-reset link-primary' role='button' onClick={x => { setValueState(range); setValue(range, true) }} style={{visibility: isFullRange ? 'hidden' : 'visible'}}>Reset</a>
-      </div>
+      {Title}
       <Histoslider 
         data={configuration.data}
         onChange={x => { setValueState(x); setValue(x, true) }}
@@ -114,15 +122,3 @@ const inputOptions = {
 }
 
 reactShinyInput('.histoslider', 'histoslider.histoslider', HistosliderInput, inputOptions);
-
-// TODO: should we try adding width:100%/height:100% to the uiOutput() container?
-//const old_initialize = Shiny.inputBindings["histoslider.histoslider"].initialize;
-//Shiny.inputBindings["histoslider.histoslider"].initialize = function(el) {
-//  // TODO: probably have to do this recursively :(
-//  console.log(el.parentNode);
-//  const is_dynamic = el.parentNode.classList.contains('shiny-html-output');
-//  if (is_dynamic) {
-//    el.style.width = '100%';
-//    el.style.height = '100%';
-//  }
-//}

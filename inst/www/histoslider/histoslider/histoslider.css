@@ -1,20 +1,13 @@
 .histoslider-title {
   display: flex;
-  justify-content: center;
+  justify-content: space-evenly;
   align-items: center;
   margin-bottom: -10px;
-  padding-left: 20px; 
-  padding-right: 20px;
-}
-
-.histoslider-label {
-  margin-left: auto;
 }
 
 .histoslider-reset {
   font-weight: 700;
   cursor: pointer;
-  margin-left: auto;
   text-decoration: none;
   z-index: 1;
 }
