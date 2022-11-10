@@ -12,7 +12,7 @@ ui <- fluidPage(
       flexDirection = "column",
       alignItems = "center"
     ),
-    uiOutput("slider", container = function(...) div(..., style="width:100%")),
+    uiOutput("slider"),
     selectInput("var", NULL, names(mtcars), selected = "mpg", width = "fit-content", selectize = FALSE)
   )
 )

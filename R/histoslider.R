@@ -36,8 +36,8 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
     list(
       data = bins,
       selection = selection,
-      width = validateCssUnit(width),
-      height = validateCssUnit(height),
+      width = "100%",
+      height = "100%",
       label = label,
       isDate = is_date_time(values)
     ),
@@ -62,7 +62,7 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
     default = selection,
     configuration = config,
     container = function(...) {
-      div(..., style = css(height = "100%", width = "100%"))
+      div(..., style = css(height = validateCssUnit(height), width = validateCssUnit(width)))
     }
   )
 }
