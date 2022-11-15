@@ -20,4 +20,18 @@ jobs:
   R-CMD-check:
     uses: rstudio/shiny-workflows/.github/workflows/R-CMD-check.yaml@v1
   upload-snaps:
-    uses: actions/upload-artifact@main
+    steps:
+       - name: R version
+         shell: Rscript {0}
+         id: r-version
+         run: |
+           ## --------------------------------------------------------------------
+           v <- paste0(version$major, ".", version$minor)
+           cat(paste0("::set-output name=version::", v, "\n"))
+
+      - name: Upload check results
+        if: always()
+        uses: actions/upload-artifact@master
+        with:
+          name: ${{ runner.os }}-r${{ steps.r-version.outputs.version }}-results
+          path: ./
