@@ -1,4 +1,7 @@
-#' Create a histoslider
+#' Create a histogram slider
+#'
+#' Creates a Shiny UI input binding to a histogram with a slider "filter"
+#' control.
 #'
 #' @param id An input id.
 #' @param label A label for the input (can be `NULL` or a string).
@@ -6,8 +9,13 @@
 #' @param start A numeric value for the starting handle.
 #' @param end A numeric value for the ending handle.
 #' @param width,height Any valid CSS unit defining the width/height.
-#' @param breaks determines how histogram bins are computed (see [hist()] for possible values and details).
-#' @param options a list of [histoslider options](https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L103-L125).
+#' @param breaks determines how histogram bins are computed (see [hist()] for
+#'   possible values and details).
+#' @param options a list of [histoslider
+#'   options](https://github.com/samhogg/histoslider/blob/b4ac504/src/components/Histoslider.js#L103-L125).
+#'
+#'
+#' @returns A Shiny UI input element.
 #'
 #' @export
 #' @examples
@@ -62,10 +70,16 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
   )
 }
 
-#' @rdname input_histoslider
+#' Update a histogram slider
+#'
+#' Change the value of a [input_histoslider()] on the client. See
+#' [here](https://github.com/cpsievert/histoslider/blob/main/inst/examples/update/app.R)
+#' for an example.
+#'
+#' @inheritParams input_histoslider
 #' @param session The shiny user `session` object.
 #' @export
-update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, end = NULL, width = NULL, height = NULL, breaks = "Sturges",  options = NULL, session = shiny::getDefaultReactiveDomain()) {
+update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, end = NULL, width = NULL, height = NULL, breaks = "Sturges", options = NULL, session = shiny::getDefaultReactiveDomain()) {
 
   bins <- NULL
   selection <- NULL
