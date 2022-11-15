@@ -61,8 +61,3 @@ test_that("Basic functionality works", {
   app$set_inputs(var = "cyl", wait_ = FALSE)
   expect_screenshot()
 })
-
-
-test_that("Hack to get _snaps", {
-  expect_true(FALSE)
-})
