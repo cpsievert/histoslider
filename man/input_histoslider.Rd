@@ -12,7 +12,7 @@ input_histoslider(
   start = NULL,
   end = NULL,
   width = "100\%",
-  height = 150,
+  height = 175,
   breaks = "Sturges",
   options = list()
 )
