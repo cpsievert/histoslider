@@ -29,9 +29,9 @@ jobs:
            v <- paste0(version$major, ".", version$minor)
            cat(paste0("::set-output name=version::", v, "\n"))
 
-      - name: Upload check results
-        if: always()
-        uses: actions/upload-artifact@master
-        with:
-          name: ${{ runner.os }}-r${{ steps.r-version.outputs.version }}-results
-          path: ./
+       - name: Upload check results
+         if: always()
+         uses: actions/upload-artifact@master
+         with:
+           name: ${{ runner.os }}-r${{ steps.r-version.outputs.version }}-results
+           path: ./
