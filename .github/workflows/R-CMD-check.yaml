@@ -19,3 +19,9 @@ jobs:
     uses: rstudio/shiny-workflows/.github/workflows/routine.yaml@v1
   R-CMD-check:
     uses: rstudio/shiny-workflows/.github/workflows/R-CMD-check.yaml@v1
+  upload-snaps:
+    uses: actions/upload-artifact@main
+    with:
+      name: ${{ runner.os }}-r${{ steps.st2-r-version.outputs.version }}-testthat-snapshots
+      path: tests/testthat/_snaps
+      if-no-files-found: ignore
