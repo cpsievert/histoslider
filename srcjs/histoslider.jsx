@@ -114,7 +114,14 @@ const HistosliderInput = ({ configuration, value, setValue }) => {
 
 // https://github.com/react-R/reactR/blob/7dccb68a/srcjs/input.js#L36-L71
 const inputOptions = {
-  type: "histoslider.histoslider",
+  type: (el) => {
+    let res = "histoslider.histoslider",
+      value_type = el.getAttribute("data-value-type");
+    if (value_type) {
+      res += value_type;
+    }
+    return res;
+  },
   ratePolicy: {
     policy: "debounce", 
     delay: 250

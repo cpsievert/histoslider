@@ -30,31 +30,25 @@
 #'   )
 #' }
 #'
-input_histoslider <- function(id, label, values, start = NULL, end = NULL, width = "100%", height = 175, breaks = "Sturges", options = list()) {
+input_histoslider <- function(id, label, values, start = NULL, end = NULL, width = "100%", height = 175, breaks = rlang::missing_arg(), options = list()) {
 
-  bins <- compute_bins(values, breaks)
-
-  rng <- attr(bins, "range")
-  selection <- c(
-    start %||% rng[1],
-    end %||% rng[2]
+  config <- rlang::list2(
+    width = "100%",
+    height = "100%",
+    label = label,
+    !!!compute_bin_config(values, breaks, start, end)
   )
 
-  config <- utils::modifyList(
-    list(
-      data = bins,
-      selection = selection,
-      width = "100%",
-      height = "100%",
-      label = label,
-      isDate = is_date_time(values)
-    ),
-    options
-  )
+  config <- utils::modifyList(config, options)
+
+  value_type <- NULL
+  if (is_date_time(values)) {
+    value_type <- if (inherits(values, "Date")) "date" else "datetime"
+  }
 
   reactR::createReactShinyInput(
     id, class = "histoslider",
-    dependencies = htmltools::htmlDependency(
+    dependencies = htmlDependency(
       name = "histoslider-input",
       version = "1.0.0",
       src = "www/histoslider/histoslider",
@@ -62,10 +56,17 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
       script = "histoslider.js",
       stylesheet = "histoslider.css"
     ),
-    default = selection,
+    default = config$selection,
     configuration = config,
     container = function(...) {
-      div(..., style = css(height = validateCssUnit(height), width = validateCssUnit(width)))
+      div(
+        style = css(
+          height = validateCssUnit(height),
+          width = validateCssUnit(width)
+        ),
+        `data-value-type` = value_type,
+        ...
+      )
     }
   )
 }
@@ -79,47 +80,36 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
 #' @inheritParams input_histoslider
 #' @param session The shiny user `session` object.
 #' @export
-update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, end = NULL, width = NULL, height = NULL, breaks = "Sturges", options = NULL, session = shiny::getDefaultReactiveDomain()) {
+update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, end = NULL, breaks = rlang::missing_arg(), options = NULL, session = shiny::getDefaultReactiveDomain()) {
 
-  bins <- NULL
-  selection <- NULL
-  if (!is.null(values)) {
-    bins <- compute_bins(values, breaks)
+  config <- if (!is.null(values)) {
 
-    rng <- attr(bins, "range")
-    selection <- c(
-      start %||% rng[1],
-      end %||% rng[2]
-    )
+    compute_bin_config(values, breaks, start, end)
 
   } else if (!is.null(start) || !is.null(end)) {
 
-    selection <- c(
+    list(selection = c(
       start %||% shiny::isolate(session$input[[id]][1]),
       end %||% shiny::isolate(session$input[[id]][2])
-    )
+    ))
 
   }
 
-  config <- dropNulls(list(
-    data = bins,
-    selection = selection,
-    width = validateCssUnit(width),
-    height = validateCssUnit(height),
-    label = label,
-    isDate = is_date_time(values)
-  ))
+  if (!is.null(label)) {
+    config$label <- label
+  }
 
   if (length(options)) {
     config <- c(config, options)
   }
 
   msg <- list()
-  if (!is.null(selection)) {
-    msg$value <- selection
-  }
-  if (length(config)) {
+  if (length(config) > 0) {
     msg$configuration <- config
+
+    if (!is.null(config$selection)) {
+      msg$value <- config$selection
+    }
   }
 
   session$sendInputMessage(id, msg)
@@ -127,15 +117,32 @@ update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, en
 
 
 
-compute_bins <- function(values, breaks) {
-  x <- graphics::hist(values, plot = FALSE, breaks = breaks)
+compute_bin_config <- function(values, breaks = rlang::missing_arg(), start = NULL, end = NULL) {
 
-  if (is_date_time(values)) {
+  isDate <- is_date_time(values)
+
+  if (isDate) {
+    # hist.Date() will actually error with missing breaks
+    if (rlang::is_missing(breaks)) {
+      breaks <- 30
+      rlang::inform(
+        'Defaulting to `breaks = 30`. See `help("hist.Date", "graphics")` for more options.'
+      )
+    }
+  }
+
+  x <- if (rlang::is_missing(breaks)) {
+    graphics::hist(values, plot = FALSE)
+  } else {
+    graphics::hist(values, plot = FALSE, breaks = breaks)
+  }
+
+  if (isDate) {
     C <- if (inherits(values, "Date")) 86400000 else 1000
     x$breaks <- x$breaks * C
   }
 
-  res <- lapply(seq_along(x$counts), function(i) {
+  dat <- lapply(seq_along(x$counts), function(i) {
     list(
       y = x$counts[[i]],
       x0 = x$breaks[[i]],
@@ -143,7 +150,33 @@ compute_bins <- function(values, breaks) {
     )
   })
 
-  attr(res, "range") <- range(x$breaks)
+  rng <- range(x$breaks)
+  selection <- c(
+    start %||% rng[1],
+    end %||% rng[2]
+  )
+
+  res <- list(
+    data = dat,
+    selection = selection,
+    isDate = isDate
+  )
+
+  if (isDate) {
+    res$handleLabelFormat <- if (inherits(values, "Date")) {
+      "%b %e %Y"
+    } else {
+      "%b %e %Y %H:%M:%S"
+    }
+
+    rlang::inform(
+      paste0(
+        'Defaulting to `options = list(handleLabelFormat = "',
+        res$handleLabelFormat, '")`. See https://github.com/d3/d3-time-format#locale_format for more options'
+      )
+    )
+  }
+
   res
 }
 
@@ -154,9 +187,4 @@ is_date_time <- function(x) {
 
 "%||%" <- function(x, y) {
   if (is.null(x)) y else x
-}
-
-
-dropNulls <- function(x) {
-  x[!vapply(x, is.null, FUN.VALUE = logical(1))]
 }

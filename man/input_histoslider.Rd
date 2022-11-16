@@ -12,7 +12,7 @@ input_histoslider(
   end = NULL,
   width = "100\%",
   height = 175,
-  breaks = "Sturges",
+  breaks = rlang::missing_arg(),
   options = list()
 )
 }

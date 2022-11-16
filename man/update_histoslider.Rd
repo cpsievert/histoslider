@@ -10,9 +10,7 @@ update_histoslider(
   values = NULL,
   start = NULL,
   end = NULL,
-  width = NULL,
-  height = NULL,
-  breaks = "Sturges",
+  breaks = rlang::missing_arg(),
   options = NULL,
   session = shiny::getDefaultReactiveDomain()
 )
@@ -27,8 +25,6 @@ update_histoslider(
 \item{start}{A numeric value for the starting handle.}
 
 \item{end}{A numeric value for the ending handle.}
-
-\item{width, height}{Any valid CSS unit defining the width/height.}
 
 \item{breaks}{determines how histogram bins are computed (see \code{\link[=hist]{hist()}} for
 possible values and details).}
