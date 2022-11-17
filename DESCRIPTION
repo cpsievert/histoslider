@@ -11,9 +11,11 @@ Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.2
 Imports: 
+    rlang,
     htmltools,
     reactR,
     shiny
 Suggests:
     testthat,
-    shinytest2
+    shinytest2,
+    bslib
