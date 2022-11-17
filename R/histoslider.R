@@ -93,6 +93,10 @@ update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, en
       end %||% shiny::isolate(session$input[[id]][2])
     ))
 
+  } else {
+
+    list()
+
   }
 
   if (!is.null(label)) {
