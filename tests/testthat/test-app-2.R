@@ -49,6 +49,7 @@ test_that("Basic functionality works", {
     name = "dates",
     height = 400,
     width = 700,
+    seed = 1012,
     view = interactive()
   )
   expect_screenshot <- function() {
@@ -73,7 +74,6 @@ test_that("Basic functionality works", {
   )
 
   expect_screenshot()
-
 
   expect_true(FALSE)
 })
