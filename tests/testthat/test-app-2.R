@@ -2,6 +2,8 @@ library(shinytest2)
 library(shiny)
 library(htmltools)
 
+set.seed(1024)
+
 dates <- sample(
   seq(
     as.Date('2020-01-01'),
@@ -49,7 +51,6 @@ test_that("Basic functionality works", {
     name = "dates",
     height = 400,
     width = 700,
-    seed = 1012,
     view = interactive()
   )
   expect_screenshot <- function() {
