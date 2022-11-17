@@ -32,9 +32,7 @@ testing_app <- function(label = NULL, ...) {
 }
 
 test_that("Basic functionality works", {
-  skip_on_cran()
-  skip_on_os("windows")
-  skip_on_os("linux")
+  skip_if_not_on_gha_mac()
 
   app <- AppDriver$new(
     testing_app(),
