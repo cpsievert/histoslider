@@ -62,6 +62,6 @@ shinyApp(ui, server)
 ```
 
 
-![<https://i.imgur.com/RueblfI.gifv>](https://i.imgur.com/RueblfI.gif)
+![<https://i.imgur.com/XhVNGCf.gifv>](https://i.imgur.com/XhVNGCf.gif)
 
 An `input_histoslider()` can also be updated programmatically via `update_histoslider()`. For example usage, see the [`inst/examples`](https://github.com/cpsievert/histoslider/tree/main/inst/examples) folder.
