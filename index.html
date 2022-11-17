@@ -59,7 +59,7 @@
 <div class="page-header"><h1 id="histoslider">histoslider<a class="anchor" aria-label="anchor" href="#histoslider"></a>
 </h1></div>
 <!-- badges: start -->
-<!-- badges: end --><p>Provides a Shiny input binding wrapper to the <a href="https://github.com/samhogg/histoslider" class="external-link">histoslider</a> React component.</p>
+<!-- badges: end --><p>A Shiny input binding wrapper for the <a href="https://github.com/samhogg/histoslider" class="external-link">histoslider</a> React component.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -70,17 +70,44 @@
 <div class="section level2">
 <h2 id="example-usage">Example usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
 </h2>
+<p><code><a href="reference/input_histoslider.html">input_histoslider()</a></code> currently supports creating histogram sliders from numeric, date, datetime vectors. The histogram bins may be customized through the <code>breaks</code> argument of an implicit call to <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">histoslider</span><span class="op">)</span></span>
 <span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span></span>
-<span>  <span class="fu"><a href="reference/input_histoslider.html">input_histoslider</a></span><span class="op">(</span><span class="st">"x"</span>, <span class="st">"Random"</span>, <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
-<span>    <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/observe.html" class="external-link">observe</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/print.html" class="external-link">print</a></span><span class="op">(</span><span class="va">input</span><span class="op">$</span><span class="va">x</span><span class="op">)</span><span class="op">)</span></span>
-<span>  <span class="op">}</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p>See the <code>inst/examples</code> folder for more examples.</p>
+<span><span class="va">numerics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
+<span><span class="va">dates</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2020-01-01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.Date.html" class="external-link">as.Date</a></span><span class="op">(</span><span class="st">'2030-01-01'</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 month"</span><span class="op">)</span>,</span>
+<span>  size <span class="op">=</span> <span class="fl">500</span>, replace <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">datetimes</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/sample.html" class="external-link">sample</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/seq.html" class="external-link">seq</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">'2020-01-01 00:01'</span><span class="op">)</span>, <span class="fu"><a href="https://rdrr.io/r/base/as.POSIXlt.html" class="external-link">as.POSIXct</a></span><span class="op">(</span><span class="st">'2030-01-01 00:01'</span><span class="op">)</span>, by <span class="op">=</span> <span class="st">"1 month"</span><span class="op">)</span>,</span>
+<span>  size <span class="op">=</span> <span class="fl">500</span>, replace <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/page.html" class="external-link">page_fixed</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="reference/input_histoslider.html">input_histoslider</a></span><span class="op">(</span><span class="st">"numeric"</span>, <span class="st">"Numeric"</span>, <span class="va">numerics</span>, start <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, end <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="reference/input_histoslider.html">input_histoslider</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"Date"</span>, <span class="va">dates</span>, breaks <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="reference/input_histoslider.html">input_histoslider</a></span><span class="op">(</span><span class="st">"datetime"</span>, <span class="st">"Date Time"</span>, <span class="va">datetimes</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/textOutput.html" class="external-link">verbatimTextOutput</a></span><span class="op">(</span><span class="st">"values"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">values</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/renderPrint.html" class="external-link">renderPrint</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>      numeric <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">numeric</span>,</span>
+<span>      date <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">date</span>,</span>
+<span>      datetime <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">datetime</span></span>
+<span>    <span class="op">)</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
+<div class="figure">
+<img src="https://i.imgur.com/RueblfI.gif" alt=""><p class="caption"><a href="https://i.imgur.com/RueblfI.gifv" class="external-link uri">https://i.imgur.com/RueblfI.gifv</a></p>
+</div>
+<p>An <code><a href="reference/input_histoslider.html">input_histoslider()</a></code> can also be updated programmatically via <code><a href="reference/update_histoslider.html">update_histoslider()</a></code>. For example usage, see the <a href="https://github.com/cpsievert/histoslider/tree/main/inst/examples" class="external-link"><code>inst/examples</code></a> folder.</p>
 </div>
 </div>
   </div>
