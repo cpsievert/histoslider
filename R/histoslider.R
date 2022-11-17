@@ -16,6 +16,7 @@
 #'
 #'
 #' @returns A Shiny UI input element.
+#' @seealso [update_histoslider]
 #'
 #' @export
 #' @examples
@@ -73,12 +74,20 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
 
 #' Update a histogram slider
 #'
-#' Change the value of a [input_histoslider()] on the client. See
+#' Change the value of a [input_histoslider()] on the client (must be called
+#' inside a currently active user `session`). See
 #' [here](https://github.com/cpsievert/histoslider/blob/main/inst/examples/update/app.R)
 #' for an example.
 #'
+#' @details Any arguments with `NULL` values will be ignored; they will not
+#'   result in any changes to the input object on the client.
+#'
 #' @inheritParams input_histoslider
 #' @param session The shiny user `session` object.
+#'
+#' @returns Nothing.
+#' @seealso [input_histoslider]
+#'
 #' @export
 update_histoslider <- function(id, label = NULL, values = NULL, start = NULL, end = NULL, breaks = rlang::missing_arg(), options = NULL, session = shiny::getDefaultReactiveDomain()) {
 

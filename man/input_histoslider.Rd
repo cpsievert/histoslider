@@ -54,3 +54,6 @@ if (interactive()) {
 }
 
 }
+\seealso{
+\link{update_histoslider}
+}

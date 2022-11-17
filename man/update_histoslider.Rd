@@ -33,8 +33,19 @@ possible values and details).}
 
 \item{session}{The shiny user \code{session} object.}
 }
+\value{
+Nothing.
+}
 \description{
-Change the value of a \code{\link[=input_histoslider]{input_histoslider()}} on the client. See
+Change the value of a \code{\link[=input_histoslider]{input_histoslider()}} on the client (must be called
+inside a currently active user \code{session}). See
 \href{https://github.com/cpsievert/histoslider/blob/main/inst/examples/update/app.R}{here}
 for an example.
+}
+\details{
+Any arguments with \code{NULL} values will be ignored; they will not
+result in any changes to the input object on the client.
+}
+\seealso{
+\link{input_histoslider}
 }
