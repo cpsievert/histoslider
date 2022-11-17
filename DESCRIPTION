@@ -17,4 +17,5 @@ Imports:
     shiny
 Suggests:
     testthat,
-    shinytest2
+    shinytest2,
+    bslib

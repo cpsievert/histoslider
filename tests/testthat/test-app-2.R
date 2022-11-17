@@ -74,7 +74,5 @@ test_that("Basic functionality works", {
   )
 
   expect_screenshot()
-
-  expect_true(FALSE)
 })
 
