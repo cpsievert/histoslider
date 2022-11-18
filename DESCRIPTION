@@ -1,11 +1,11 @@
 Package: histoslider
-Title: A Histogram Slider Input for Shiny
+Title: A Histogram Slider Input for 'Shiny'
 Version: 0.1
 Authors@R: c(
     person("Carson", "Sievert", role = c("cre", "aut"), email = "carson@rstudio.com", comment = c(ORCID = "0000-0002-4958-2844")),
     person("Samuel", "Hogg", role = c("ctb", "cph"), comment = "Original author of histoslider React component")
     )
-Description: A histogram slider input binding for use in Shiny. Currently supports creating histograms from numeric, date, and 'date-time' vectors.
+Description: A histogram slider input binding for use in 'Shiny'. Currently supports creating histograms from numeric, date, and 'date-time' vectors.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
