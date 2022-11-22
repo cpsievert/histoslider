@@ -16,10 +16,10 @@ A Shiny input binding wrapper for the [histoslider](https://github.com/samhogg/h
 
 ## Installation
 
-You can install the development version of `{histoslider}` like so:
+Install the stable release of `histoslider` on CRAN:
 
-``` r
-remotes::install_github("cpsievert/histoslider")
+```r
+install.packages("histoslider")
 ```
 
 ## Example usage
