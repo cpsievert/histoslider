@@ -1,6 +1,6 @@
 Package: histoslider
 Title: A Histogram Slider Input for 'Shiny'
-Version: 0.1
+Version: 0.1.0.9000
 Authors@R: c(
     person("Carson", "Sievert", role = c("cre", "aut"), email = "cpsievert1@gmail.com", comment = c(ORCID = "0000-0002-4958-2844")),
     person("Samuel", "Hogg", role = c("ctb", "cph"), comment = "Original author of histoslider React component")
