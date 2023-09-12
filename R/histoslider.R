@@ -37,6 +37,7 @@ input_histoslider <- function(id, label, values, start = NULL, end = NULL, width
     width = "100%",
     height = "100%",
     label = label,
+    selectedColor = "var(--bs-primary, #0074D9)",
     !!!compute_bin_config(values, breaks, start, end)
   )
 

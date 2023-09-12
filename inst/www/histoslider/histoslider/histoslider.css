@@ -16,3 +16,15 @@
   text-decoration: none;
   z-index: 1;
 }
+
+/*
+  Hacks for this issue
+  https://github.com/samhogg/histoslider/issues/111
+*/
+.histoslider svg {
+  background-color: unset !important;
+}
+
+.histoslider svg text {
+  fill: currentColor;
+}
