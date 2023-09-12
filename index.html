@@ -62,7 +62,9 @@
 <div class="page-header"><h1 id="histoslider">histoslider<a class="anchor" aria-label="anchor" href="#histoslider"></a>
 </h1></div>
 <!-- badges: start -->
-<!-- badges: end --><p>A Shiny input binding wrapper for the <a href="https://github.com/samhogg/histoslider" class="external-link">histoslider</a> React component.</p>
+
+<!-- badges: end -->
+<p>A Shiny input binding wrapper for the <a href="https://github.com/samhogg/histoslider" class="external-link">histoslider</a> React component.</p>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
@@ -75,7 +77,7 @@
 </h2>
 <p><code><a href="reference/input_histoslider.html">input_histoslider()</a></code> currently supports creating histogram sliders from numeric, date, datetime vectors. The histogram bins may be customized through the <code>breaks</code> argument of an implicit call to <code><a href="https://rdrr.io/r/graphics/hist.html" class="external-link">hist()</a></code>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.rstudio.com/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">histoslider</span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">numerics</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/stats/Normal.html" class="external-link">rnorm</a></span><span class="op">(</span><span class="fl">100</span><span class="op">)</span></span>
@@ -89,7 +91,7 @@
 <span>  size <span class="op">=</span> <span class="fl">500</span>, replace <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rstudio.github.io/bslib/reference/page.html" class="external-link">page_fixed</a></span><span class="op">(</span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu">bslib</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/bslib/man/page.html" class="external-link">page_fixed</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="reference/input_histoslider.html">input_histoslider</a></span><span class="op">(</span><span class="st">"numeric"</span>, <span class="st">"Numeric"</span>, <span class="va">numerics</span>, start <span class="op">=</span> <span class="op">-</span><span class="fl">1</span>, end <span class="op">=</span> <span class="fl">1</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="reference/input_histoslider.html">input_histoslider</a></span><span class="op">(</span><span class="st">"date"</span>, <span class="st">"Date"</span>, <span class="va">dates</span>, breaks <span class="op">=</span> <span class="fl">15</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="reference/input_histoslider.html">input_histoslider</a></span><span class="op">(</span><span class="st">"datetime"</span>, <span class="st">"Date Time"</span>, <span class="va">datetimes</span><span class="op">)</span>,</span>
@@ -107,8 +109,8 @@
 <span><span class="op">}</span></span>
 <span></span>
 <span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
-<div class="figure">
-<img src="https://i.imgur.com/XhVNGCf.gif" alt=""><p class="caption"><a href="https://i.imgur.com/XhVNGCf.gifv" class="external-link uri">https://i.imgur.com/XhVNGCf.gifv</a></p>
+<div class="float">
+<img src="https://i.imgur.com/XhVNGCf.gif" alt="https://i.imgur.com/XhVNGCf.gifv"><div class="figcaption"><a href="https://i.imgur.com/XhVNGCf.gifv" class="external-link uri">https://i.imgur.com/XhVNGCf.gifv</a></div>
 </div>
 <p>An <code><a href="reference/input_histoslider.html">input_histoslider()</a></code> can also be updated programmatically via <code><a href="reference/update_histoslider.html">update_histoslider()</a></code>. For example usage, see the <a href="https://github.com/cpsievert/histoslider/tree/main/inst/examples" class="external-link"><code>inst/examples</code></a> folder.</p>
 </div>
@@ -168,7 +170,7 @@
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.6.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.0.7.</p>
 </div>
 
       </footer>
