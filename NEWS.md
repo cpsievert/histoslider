@@ -1,5 +1,9 @@
 # histoslider 0.1.0.9000
 
+## Improvements
+
+* More intelligent styling defaults for dark mode and primary color customizations. (#11)
+
 ## Bug fixes
 
 * Fixed a bug with passing date/date-time values to `start` and/or `end`.
