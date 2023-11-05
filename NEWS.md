@@ -1,3 +1,5 @@
+# histoslider (development version)
+
 # histoslider 0.1.1
 
 ## Improvements
